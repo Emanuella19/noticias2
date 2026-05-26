@@ -11,6 +11,10 @@ function alterar_tema() {
         body.classList.add("escuro");
     }
 }
+function mudar_titulo(element){
+    element.innerText = "Portal Noticias";
+}
+
 function abrir_lightbox(element) {
     var lightbox = document.getElementById("lightbox");
     var lightbox_img = document.getElementById("lightbox-img");
