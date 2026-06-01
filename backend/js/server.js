@@ -1,8 +1,9 @@
 import express from 'express';
+import cors from 'cors';
 import executarQuery from "./db.js";
 
-
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 app.get('/noticias', async (req, res) => {
@@ -14,44 +15,82 @@ app.get('/noticias', async (req, res) => {
         link
     FROM
         noticias
+    ORDER BY
+        id DESC
+    LIMIT 10
     `;
-    
+
     let resultado = await executarQuery(query);
     res.send(resultado[0]);
 })
+app.post('/noticias', async (req, res) => {
 
-app.get('/check', async (req, res) => {
-    var status = {
-        status: "Running.."
-    };
-    res.send(status);
-});
+    var query = `
+    INSERT INTO noticias(
+        titulo,
+        conteudo,
+        caminhoImagem,
+        link
+        ) VALUES (
+            ?,
+            ?,
+            ?,
+            ?
+            )
+            `;
+    var noticia = [
+        req.body.titulo,
+        req.body.conteudo,
+        req.body.caminhoImagem,
+        req.body.link
+    ];
 
-app.post('/check', async (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-});
+    let resultado = await executarQuery(query, noticia);
 
-app.get('/hello', async (req, res) => {
-    var hello = {
-        hello: "Hello from Teacher!"
-    };
-    res.send(hello);
-});
-
-app.post('/hello', async (req, res) => {
     try {
         res.send({
-            hello: `Emanuella diz olá pra você ${req.body.name}`
-        })
+            insertId: resultado[0].insertId
+        });
     }
-    catch{
-        res.send({
-            hello: 'fail'
-        })
-    }
-});
+        catch {
+            res.send({
+                insertId: null
+            })
+        }
 
-app.listen(3000, () =>{
+    })
+// app.get('/check', async (req, res) => {
+//     var status = {
+//         status: "Running.."
+//     };
+//     res.send(status);
+// });
+
+// app.post('/check', async (req, res) => {
+//     console.log(req.body);
+//     res.send(req.body);
+// });
+
+// app.get('/hello', async (req, res) => {
+//     var hello = {
+//         hello: "Hello from Teacher!"
+//     };
+//     res.send(hello);
+// });
+
+// app.post('/hello', async (req, res) => {
+//     try {
+//         res.send({
+//             hello: `Emanuella diz olá pra você ${req.body.name}`
+//         })
+//     }
+//     catch{
+//         res.send({
+//             hello: 'fail'
+//         })
+//     }
+// });
+
+app.listen(3000, () => {
     console.log("Servidor online em http://localhost:3000");
 });

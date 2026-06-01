@@ -12,10 +12,18 @@
 <body class="claro" onload="exibir_noticias()">
     <header>
         <button onclick="alterar_tema()">Tema</button>
-        <img src="/img/webnews.png" alt="Notícias" onclick="abrir_lightbox(this)">   
+        <img src="../img/webnews.png" alt="Notícias" onclick="abrir_lightbox(this)">
         <h1 onclick="mudar_titulo(this)">Notícias Web</h1>
     </header>
-    <nav></nav>
+    
+    <nav>
+    <ul class="menu">
+        <li><a href="noticias.html"> Notícias</a></li>
+        <li><a href="formulario.html"> Cadastrar Notícia</a></li>
+        
+    </ul>
+    </nav>
+
     <main>
         <!--section.noticias-->
         <section class="noticias" id="noticias"></section>

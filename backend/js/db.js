@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise.js';
 
-async function name() {
+async function conectar() {
     const conexao = mysql.createConnection({
         host: '127.0.0.1',
         port: 3306,
@@ -9,7 +9,7 @@ async function name() {
         database: 'noticiario'
     });
 
-    return conexao;
+    return conexao
 };
 
 async function executarQuery(query, params=[]) {
